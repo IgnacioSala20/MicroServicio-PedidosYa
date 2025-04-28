@@ -1,4 +1,4 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn,OneToOne, JoinColumn, ManyToOne, OneToMany } from "typeorm";
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, ManyToOne, OneToMany } from "typeorm";
 import { ProvinciaEntity } from "./provincia.entity";
 import { PersonaEntity } from "./persona.entity";
 

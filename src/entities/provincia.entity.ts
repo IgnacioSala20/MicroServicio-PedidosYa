@@ -1,4 +1,4 @@
-import { BaseEntity, Column, Entity, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { PaisEntity } from "./pais.entity";
 import { CiudadEntity } from "./ciudad.entity";
 
@@ -15,4 +15,6 @@ export class ProvinciaEntity extends BaseEntity{
 
     @ManyToOne(() => PaisEntity, pais => pais.provincias)
     pais: PaisEntity;
+
+    
 }
