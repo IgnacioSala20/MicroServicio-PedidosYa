@@ -6,7 +6,7 @@ import { Repository } from 'typeorm';
 
 @Injectable()
 export class PaisService {
-    constructor(@InjectRepository(PaisEntity) private paisRepository: Repository<PaisEntity>,) {}
+    constructor(@InjectRepository(PaisEntity) private paisRepository: Repository<PaisEntity>) {}
 
     async create(datos: PaisEntity) {
         const paisExistente = await this.paisRepository.findOne({where: { name: datos.name },withDeleted: true});
