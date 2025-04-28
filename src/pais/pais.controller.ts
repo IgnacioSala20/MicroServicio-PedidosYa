@@ -28,8 +28,8 @@ export class PaisController {
     actualizacionParcial(@Param('id') id:number, @Body() datosParciales: Partial<PaisEntity>){
         return this.paisService.actualizacionParcial(id,datosParciales)
     }
-    @Patch(':id/restaurar')
-    restaurarPais(@Param('id') id: number) {
+    @Patch(':id/recuperar')
+    recuperarPais(@Param('id') id: number) {
         return this.paisService.restaurarPais(id);
     }
     

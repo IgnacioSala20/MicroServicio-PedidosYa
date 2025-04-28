@@ -1,7 +1,7 @@
 import { PaisEntity } from '@/entities/pais.entity';
-import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { NotFoundError } from 'rxjs';
+
 import { Repository } from 'typeorm';
 
 @Injectable()
