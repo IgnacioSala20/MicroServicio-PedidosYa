@@ -8,7 +8,7 @@ export class CiudadService {
     constructor(@InjectRepository(CiudadEntity) private ciudadRepository: Repository<CiudadEntity>){}
 
     async crear(ciudad: CiudadEntity){
-        const ciudadExistente= await this.ciudadRepository.findOne({where: {nameCiudad: ciudad.nameCiudad}, withDeleted:true})
+        const ciudadExistente= await this.ciudadRepository.findOne({where: {name: ciudad.name}, withDeleted:true})
 
         if (ciudadExistente){
             if(ciudadExistente.deletedAt){

@@ -60,5 +60,4 @@ export class PersonaService {
         await this.personaRepository.restore(id)
         return { message: 'Persona restaurada correctamente' };
     }
-
 }

@@ -8,7 +8,7 @@ export class CiudadEntity extends BaseEntity{
     id: number;
 
     @Column()
-    nameCiudad:string
+    name:string
 
     @OneToMany(()=> PersonaEntity, persona=>persona.ciudad)
     persona: PersonaEntity[];
