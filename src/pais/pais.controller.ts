@@ -2,7 +2,7 @@ import { Body, Controller,Delete,Get, Param, Patch, Post, Put } from '@nestjs/co
 import { PaisService } from './pais.service';
 import { PaisEntity } from '@/entities/pais.entity';
 
-@Controller('pais')
+@Controller('country')
 export class PaisController {
     constructor(private readonly paisService: PaisService){}
 

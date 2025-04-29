@@ -59,6 +59,6 @@ export class PaisService {
             throw new NotFoundException(`Pais con id ${id} no encontrado`);
         }
         await this.paisRepository.softRemove(pais);
-        return { message: 'País eliminado correctamente' };
+        return { message: 'deleted' };
     }
 }

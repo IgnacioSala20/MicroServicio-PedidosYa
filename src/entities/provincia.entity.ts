@@ -1,4 +1,4 @@
-import { BaseEntity, Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, DeleteDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { PaisEntity } from "./pais.entity";
 import { CiudadEntity } from "./ciudad.entity";
 
@@ -16,5 +16,6 @@ export class ProvinciaEntity extends BaseEntity{
     @ManyToOne(() => PaisEntity, pais => pais.provincias)
     pais: PaisEntity;
 
-    
+    @DeleteDateColumn()
+    deletedAt?: Date | null; // Esto es lo que marca la eliminación "suave"
 }
