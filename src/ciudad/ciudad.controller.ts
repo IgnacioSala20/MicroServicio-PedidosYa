@@ -38,8 +38,6 @@ export class CiudadController {
 
     @Patch(":id/recuperar")
     recuperarCiudad(@Param("id") id:number){
-        this.ciudadService.restautarCiudad(id)
+        return this.ciudadService.restautarCiudad(id)
     }
-
-
 }
