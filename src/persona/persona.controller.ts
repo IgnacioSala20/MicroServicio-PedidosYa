@@ -8,36 +8,30 @@ export class PersonaController {
 
     @Post()
     crearPersona(@Body() datosPersona: PersonaEntity){
-        return this.personaService.crear(datosPersona)
+        return this.personaService.create(datosPersona)
     }
     @Get()
     obtenerPersonas(){
-        return this.personaService.getPersonas()
+        return this.personaService.find()
     }
-
     @Get(':id')
     obtenerPersonaId(@Param("id") id:number){
-        return this.personaService.getPersonaPorId(id)
+        return this.personaService.findOne({where: {id:Number(id)}})
     }
 
     @Put(":id")
     actualizacionTotal(@Param("id") id:number, @Body() datosParciales: PersonaEntity){
-        return this.personaService.actualizacionTotal(id, datosParciales)
+        return this.personaService.update(id, datosParciales)
     }
 
     @Patch(":id")
     actualizacionParcial(@Param("id") id:number, @Body() datosParciales: Partial<PersonaEntity>){
-        return this.personaService.actualizacionParcial(id, datosParciales)
+        return this.personaService.update(id, datosParciales)
     }
 
     @Delete(":id")
     eliminar(@Param("id") id:number){
-        return this.personaService.eliminarPersona(id)
+        return this.personaService.delete(id)
     }
-    @Patch(":id/recuperar")
-    recuperarPersona(@Param("id") id:number){
-        return this.personaService.restaurarPersona(id)
-    }
-
 
 }

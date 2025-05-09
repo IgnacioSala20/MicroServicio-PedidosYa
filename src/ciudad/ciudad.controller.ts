@@ -8,36 +8,31 @@ export class CiudadController {
     
     @Post()
     crearCiudad(@Body() datosCiudad: CiudadEntity){
-        return this.ciudadService.crear(datosCiudad)
+        return this.ciudadService.create(datosCiudad)
     }
 
     @Get()
     obtenerCiudades(){
-        return this.ciudadService.getCiudades()
+        return this.ciudadService.find()
     }
 
     @Get(":id")
     obtenerCiudadPorId(@Param("id") id:number){
-        return this.ciudadService.getCiudadPorId(id)
+        return this.ciudadService.findOne({where:{id: Number(id)}})
     }
 
     @Put(":id")
     actualizacionTotal(@Param("id") id:number, @Body() datosTotales:CiudadEntity){
-        return this.ciudadService.actualizacionTotal(id, datosTotales)
+        return this.ciudadService.update(id, datosTotales)
     }
 
     @Patch(":id")
     actualizacionParcial(@Param(":id") id:number, @Body() datosParciales: Partial<CiudadEntity>){
-        return this.ciudadService.actualizacionParcial(id, datosParciales)
+        return this.ciudadService.update(id, datosParciales)
     }
 
     @Delete(":id")
     eliminarCiudad(@Param("id") id:number){
-        return this.ciudadService.eliminarCiudad(id)
-    }
-
-    @Patch(":id/recuperar")
-    recuperarCiudad(@Param("id") id:number){
-        return this.ciudadService.restautarCiudad(id)
+        return this.ciudadService.delete(id)
     }
 }

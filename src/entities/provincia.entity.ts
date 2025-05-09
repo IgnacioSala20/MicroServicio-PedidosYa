@@ -10,10 +10,10 @@ export class ProvinciaEntity extends BaseEntity{
     @Column()
     name:string
 
-    @OneToMany(()=>CiudadEntity, ciudad=>ciudad.provincia)
+    @OneToMany(()=>CiudadEntity, ciudades=>ciudades.provincia)
     ciudad: CiudadEntity[];
 
-    @ManyToOne(() => PaisEntity, pais => pais.provincias)
+    @ManyToOne(() => PaisEntity, paises => paises.provincia)
     pais: PaisEntity;
 
     @DeleteDateColumn()

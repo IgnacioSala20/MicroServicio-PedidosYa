@@ -4,37 +4,30 @@ import { PaisEntity } from '@/entities/pais.entity';
 
 @Controller('country')
 export class PaisController {
-    constructor(private readonly paisService: PaisService){}
-
+    constructor(private paisService: PaisService){}
     @Get()
     buscarPaises(){
-        return this.paisService.getPaises()
+        return this.paisService.find()
     } 
     @Post()
     crearPais(@Body() pais: PaisEntity){
         return this.paisService.create(pais)
     }
-
     @Get(':id')
-    buscarPaisPorId(@Param('id') id:number){
-        return this.paisService.getPaisPorId(id);
+    buscarPaisPorId(@Param('id') id: string | number) {
+        return this.paisService.findOne({ where: { id: Number(id) } }); // Aseguramos que id sea un número
     }
 
     @Put(':id')
     actualizacionTotal(@Param('id') id:number, @Body() datosTotales:PaisEntity){
-        return this.paisService.actualizacionTotal(id,datosTotales)
+        return this.paisService.update(id,datosTotales)
     }
     @Patch(':id')
     actualizacionParcial(@Param('id') id:number, @Body() datosParciales: Partial<PaisEntity>){
-        return this.paisService.actualizacionParcial(id,datosParciales)
+        return this.paisService.update(id,datosParciales)
     }
-    @Patch(':id/recuperar')
-    recuperarPais(@Param('id') id: number) {
-        return this.paisService.restaurarPais(id);
-    }
-    
     @Delete(':id')
     eliminarPais(@Param('id') id:number){
-        return this.paisService.eliminarPais(id)
+        return this.paisService.delete(id)
     }
 }

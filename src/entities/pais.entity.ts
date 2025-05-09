@@ -10,7 +10,7 @@ export class PaisEntity extends BaseEntity{
     name:string
     
     @OneToMany(() => ProvinciaEntity, provincia => provincia.pais)
-    provincias: ProvinciaEntity[];
+    provincia: ProvinciaEntity[];
 
     @DeleteDateColumn()
     deletedAt?: Date | null; // Esto es lo que marca la eliminación "suave"

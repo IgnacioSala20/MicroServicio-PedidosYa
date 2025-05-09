@@ -8,36 +8,27 @@ export class ProvinciaController {
 
     @Post()
     crearProvincia(@Body() datosProvincia:ProvinciaEntity){
-        return this.provinciaService.crear(datosProvincia)
+        return this.provinciaService.create(datosProvincia)
     }
-
     @Get()
     obtenerProvincias(){
-        return this.provinciaService.getProvincias()
+        return this.provinciaService.find()
     }
-
     @Get(":id")
     obtenerProvinciasPorId(@Param("id") id:number){
-        return this.provinciaService.getProvinciaPorId(id)
+        return this.provinciaService.findOne({ where: { id: Number(id) } })
     }
-
     @Put(":id")
     actualizacionTotal(@Param("id") id:number, @Body() datosTotal: ProvinciaEntity){
-        return this.provinciaService.actualizacionTotal(id, datosTotal)
+        return this.provinciaService.update(id, datosTotal)
     }
-
     @Patch(":id")
     actualizacionParcial(@Param("id") id:number, @Body() datosParciales: Partial<ProvinciaEntity>){
-        return this.provinciaService.actualizacionParcial(id,datosParciales)
+        return this.provinciaService.update(id,datosParciales)
     }
-
     @Delete(":id")
     eliminar(@Param("id") id:number){
-        return this.provinciaService.eliminarProvincia(id)
-    }
-    @Patch(":id/recuperar")
-    recuperarProvincia(@Param("id") id:number){
-        return this.provinciaService.restaurarProvincia(id)
+        return this.provinciaService.delete(id)
     }
     
 }
