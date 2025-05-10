@@ -1,5 +1,4 @@
 import {
-    BaseEntity,
     DeepPartial,
     FindManyOptions,
     FindOneOptions,
@@ -8,8 +7,9 @@ import {
     UpdateResult,
 } from 'typeorm';
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
+import { BaseEntity } from '../entities/base.entity';  // Importamos BaseEntity
 
-export abstract class BaseService<T extends BaseEntity & { id: number | string }> {
+export abstract class BaseService<T extends BaseEntity> {
     findManyOptions: FindManyOptions<T> = {};
     findOneOptions: FindOneOptions<T> = {};
 
@@ -44,23 +44,19 @@ export abstract class BaseService<T extends BaseEntity & { id: number | string }
     }
     return {"message": "deleted" };
     }
-}
-/*
-    async create(datos: PaisEntity) {
-        const paisExistente = await this.paisRepository.findOne({where: { name: datos.name },withDeleted: true});
-        if (paisExistente) {
-            if (paisExistente.deletedAt) {
-                await this.paisRepository.recover(paisExistente);
-                return { message: 'País restaurado correctamente', pais: paisExistente };
-            } else {
-                return { message: 'El país ya existe y esta activo'};
-            }
+    async restore(id: number | string): Promise<T> {
+        const entity = await this.repository.findOne({
+            where: { id } as FindOptionsWhere<T>,
+            withDeleted: true,
+        });
+        if (!entity) {
+            throw new Error(`Entity with id ${id} not found`);
         }
-        const nuevoPais = this.paisRepository.create(datos);
-        return await this.paisRepository.save(nuevoPais);
+        await this.repository.restore(id);
+        const restored = await this.repository.findOneBy({ id } as FindOptionsWhere<T>);
+        if (!restored) {
+            throw new Error(`Entity with id ${id} could not be restored`);
+        }
+        return restored;
     }
-        async getPaises():Promise<PaisEntity[]>{
-        return this.paisRepository.find();
-    }
-    
- */
+}
