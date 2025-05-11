@@ -8,6 +8,7 @@ import {
 } from 'typeorm';
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
 import { BaseEntity } from '../entities/base.entity';  // Importamos BaseEntity
+import { paginate, IPaginationOptions, Pagination } from 'nestjs-typeorm-paginate';
 
 export abstract class BaseService<T extends BaseEntity> {
     findManyOptions: FindManyOptions<T> = {};
@@ -59,4 +60,11 @@ export abstract class BaseService<T extends BaseEntity> {
         }
         return restored;
     }
+    async paginate(options: IPaginationOptions): Promise<Pagination<T>> {
+        const queryBuilder = this.repository.createQueryBuilder('entity');
+        queryBuilder.orderBy('entity.id', 'ASC'); // orden por defecto, se puede organizar segun como querramos 
+        //ASC es ascendente y DESC es descendente
+        return paginate<T>(queryBuilder, options);
+    }
+
 }
