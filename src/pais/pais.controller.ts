@@ -8,5 +8,4 @@ export class PaisController extends BaseController<PaisEntity> {
     constructor(protected readonly paisService: PaisService){
         super(paisService);
     }
-    
 }

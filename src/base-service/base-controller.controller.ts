@@ -22,7 +22,7 @@ export class BaseController<T extends BaseEntity> {  // Definir que T extiende B
         @Req() req: Request,
         @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number = 1,
         @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number = 10,
-    ): Promise<Pagination<T> | T[]> {
+    ): Promise<Pagination<T>> {
         limit = limit > 100 ? 100 : limit;
         const route = `${req.protocol}://${req.get('host')}${req.baseUrl}`;
         return this.service.paginate({
