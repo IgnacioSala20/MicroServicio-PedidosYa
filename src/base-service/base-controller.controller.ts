@@ -6,7 +6,7 @@ import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity
 import { Pagination } from 'nestjs-typeorm-paginate';
 import { Request } from 'express';
 
-export class BaseController<T extends BaseEntity> {  // Definir que T extiende BaseEntity
+export abstract class BaseController<T extends BaseEntity> {  // Definir que T extiende BaseEntity
     constructor(private readonly service: BaseService<T>) {}  // Inyectamos el servicio BaseService para el tipo específico
     @Post()
     create(@Body() data: T) {
@@ -19,16 +19,13 @@ export class BaseController<T extends BaseEntity> {  // Definir que T extiende B
 
     @Get()
     async getPaginated(
-        @Req() req: Request,
         @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number = 1,
         @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number = 10,
     ): Promise<Pagination<T>> {
         limit = limit > 100 ? 100 : limit;
-        const route = `${req.protocol}://${req.get('host')}${req.baseUrl}`;
         return this.service.paginate({
             page,
             limit,
-            route,
         });
     }
     @Get(':id')
