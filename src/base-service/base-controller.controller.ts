@@ -50,3 +50,4 @@ export class BaseController<T extends BaseEntity> {  // Definir que T extiende B
 
 
 }
+
