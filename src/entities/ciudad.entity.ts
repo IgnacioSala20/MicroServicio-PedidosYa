@@ -13,5 +13,4 @@ export class CiudadEntity extends BaseEntity{
     
     @ManyToOne(()=> ProvinciaEntity, provincia=>provincia.ciudad)
     provincia: ProvinciaEntity;
-
 }

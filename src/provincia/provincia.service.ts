@@ -10,8 +10,6 @@ export class ProvinciaService extends BaseService<ProvinciaEntity> {
     findOneOptions: FindOneOptions<ProvinciaEntity> = {
         relations: ['pais'],
     };
-    
-    
     constructor(
         @InjectRepository(ProvinciaEntity) 
         protected provinciaRepository:Repository<ProvinciaEntity>,
@@ -19,6 +17,9 @@ export class ProvinciaService extends BaseService<ProvinciaEntity> {
         super(provinciaRepository);
     }
 
+    async pruebas(){
+        return this.provinciaRepository.find()
+    }
 
     
 }

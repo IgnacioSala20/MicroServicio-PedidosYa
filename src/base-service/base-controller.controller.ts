@@ -1,17 +1,18 @@
-import { Body, DefaultValuePipe, Delete, Get, Param, ParseIntPipe, Patch, Post, Put, Query, Req } from '@nestjs/common';
+import { Body, DefaultValuePipe, Delete, Get, Param, ParseIntPipe, Patch, Post, Put, Query, Req, UseGuards } from '@nestjs/common';
 import { BaseService } from './base-service.service';  // Importar el servicio base
 import { BaseEntity } from '@/entities/base.entity';  // Importar BaseEntity (aunque en este caso no es necesario en el controlador, es para ilustrar)
 import { FindOptionsWhere } from 'typeorm';
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
 import { Pagination } from 'nestjs-typeorm-paginate';
-import { Request } from 'express';
-
 export abstract class BaseController<T extends BaseEntity> {  // Definir que T extiende BaseEntity
     constructor(private readonly service: BaseService<T>) {}  // Inyectamos el servicio BaseService para el tipo específico
+    
+    //@Permissions('create')
     @Post()
     create(@Body() data: T) {
         return this.service.create(data);  
     }
+
     @Get('all')
     getAll() {
         return this.service.find(); // sin paginación
