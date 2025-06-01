@@ -1,4 +1,4 @@
-import { PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm';
+import { PrimaryGeneratedColumn, DeleteDateColumn } from 'typeorm';
 
 export class BaseEntity {
     @PrimaryGeneratedColumn()

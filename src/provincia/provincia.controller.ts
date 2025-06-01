@@ -1,4 +1,4 @@
-import { Controller, Get, UseGuards } from '@nestjs/common';
+import { Controller, UseGuards } from '@nestjs/common';
 import { ProvinciaService } from './provincia.service';
 import { ProvinciaEntity } from '@/entities/provincia.entity';
 import { BaseController } from '@/base-service/base-controller.controller';
@@ -7,7 +7,7 @@ import { PermissionController } from '@/middlewares/decorators/permissions.decor
 //import { PermissionController } from '@/middlewares/decorators/permissions.decorator';
 
 @UseGuards(AuthGuard)
-@PermissionController('provincia')
+@PermissionController('reporte')
 @Controller('province')
 export class ProvinciaController extends BaseController<ProvinciaEntity> {
     constructor(protected readonly provinciaService: ProvinciaService){

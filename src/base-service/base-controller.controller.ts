@@ -1,4 +1,4 @@
-import { Body, DefaultValuePipe, Delete, Get, Param, ParseIntPipe, Patch, Post, Put, Query, Req, UseGuards } from '@nestjs/common';
+import { Body, DefaultValuePipe, Delete, Get, Param, ParseIntPipe, Patch, Post, Put, Query } from '@nestjs/common';
 import { BaseService } from './base-service.service';  // Importar el servicio base
 import { BaseEntity } from '@/entities/base.entity';  // Importar BaseEntity (aunque en este caso no es necesario en el controlador, es para ilustrar)
 import { FindOptionsWhere } from 'typeorm';
