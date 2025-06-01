@@ -9,7 +9,6 @@ import {
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
 import { BaseEntity } from '../entities/base.entity';  // Importamos BaseEntity
 import { paginate, IPaginationOptions, Pagination } from 'nestjs-typeorm-paginate';
-
 export abstract class BaseService<T extends BaseEntity> {
     findManyOptions: FindManyOptions<T> = {};
     findOneOptions: FindOneOptions<T> = {};
@@ -36,13 +35,13 @@ export abstract class BaseService<T extends BaseEntity> {
     return this.repository.update(id, entity);
     }
 
-    //Borrado logico! , no contempla borrado total
     async delete(id: number | string):Promise<{ message: string }> {
     //Lo que hace el FindOptionsWhere es una conversion explicita de un objeto a un objeto FindOptionsWhere
     const entity = await this.repository.findOneBy({id} as FindOptionsWhere<T>);
     if (!entity) {
         throw new Error(`Entity with id ${id} not found`);
     }
+    await this.repository.softDelete(id);
     return {"message": "deleted" };
     }
     async restore(id: number | string): Promise<T> {
@@ -66,5 +65,4 @@ export abstract class BaseService<T extends BaseEntity> {
         //ASC es ascendente y DESC es descendente
         return paginate<T>(queryBuilder, options);
     }
-
 }

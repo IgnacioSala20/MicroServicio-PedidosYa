@@ -6,7 +6,6 @@ import { AuthGuard } from '@/middlewares/auth.middleware';
 import { PermissionController, Permissions } from '@/middlewares/decorators/permissions.decorator';
 
 @UseGuards(AuthGuard)
-@Permissions(['Ver reportes', 'crear usuario'])
 @PermissionController('persona')
 @Controller('person')
 export class PersonaController extends BaseController<PersonaEntity> {

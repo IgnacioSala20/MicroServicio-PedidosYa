@@ -4,20 +4,22 @@ import { BaseEntity } from '@/entities/base.entity';  // Importar BaseEntity (au
 import { FindOptionsWhere } from 'typeorm';
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
 import { Pagination } from 'nestjs-typeorm-paginate';
+import { Permissions } from '@/middlewares/decorators/permissions.decorator';
 export abstract class BaseController<T extends BaseEntity> {  // Definir que T extiende BaseEntity
     constructor(private readonly service: BaseService<T>) {}  // Inyectamos el servicio BaseService para el tipo específico
     
-    //@Permissions('create')
+    @Permissions(['crear'])
     @Post()
     create(@Body() data: T) {
         return this.service.create(data);  
     }
 
+    @Permissions(['buscar'])
     @Get('all')
     getAll() {
         return this.service.find(); // sin paginación
     }
-
+    @Permissions(['buscar'])
     @Get()
     async getPaginated(
         @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number = 1,
@@ -29,18 +31,27 @@ export abstract class BaseController<T extends BaseEntity> {  // Definir que T e
             limit,
         });
     }
+    @Permissions(['buscar'])
     @Get(':id')
     findOne(@Param('id') id: number) {
         return this.service.findOne({ where: { id } as FindOptionsWhere<T> });
     }
+    @Permissions(['actualizar'])
     @Put(':id')
     update(@Param('id') id: number, @Body() data: QueryDeepPartialEntity<T>) { 
         return this.service.update(id, data); 
     }
+    @Permissions(['actualizar'])
+    @Patch(':id')
+    updatePartial(@Param('id') id: number, @Body() data: QueryDeepPartialEntity<T>) {
+        return this.service.update(id, data);
+    }
+    @Permissions(['eliminar'])
     @Delete(':id')
     delete(@Param('id') id: number) {
         return this.service.delete(id);  
     }
+    @Permissions(['restaurar'])
     @Patch(':id/restore')
     restore(@Param('id') id: number) {
         return this.service.restore(id); 
