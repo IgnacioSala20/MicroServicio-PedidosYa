@@ -8,9 +8,10 @@ export class ProvinciaEntity extends BaseEntity{
     @Column()
     name:string
 
-    @OneToMany(()=>CiudadEntity, ciudades=>ciudades.provincia)
-    ciudad: CiudadEntity[];
+    @OneToMany(() => CiudadEntity, ciudades => ciudades.provincias)
+    ciudades: CiudadEntity[];
 
-    @ManyToOne(() => PaisEntity, paises => paises.provincia)
-    pais: PaisEntity;
+
+    @ManyToOne(() => PaisEntity, paises => paises.provincias)
+    paises: PaisEntity;
 }

@@ -7,6 +7,6 @@ export class PaisEntity extends BaseEntity{
     @Column()
     name:string
     
-    @OneToMany(() => ProvinciaEntity, provincia => provincia.pais)
-    provincia: ProvinciaEntity[];
+    @OneToMany(() => ProvinciaEntity, provincias => provincias.paises)
+    provincias: ProvinciaEntity[];
 }

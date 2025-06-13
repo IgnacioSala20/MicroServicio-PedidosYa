@@ -12,6 +12,6 @@ export class PersonaEntity extends BaseEntity{
     @Column()
     fechaNacimiento:string
     
-    @ManyToOne(()=>CiudadEntity, ciudad=>ciudad.persona)
-    ciudad: CiudadEntity;
+    @ManyToOne(()=>CiudadEntity, ciudades=>ciudades.personas)
+    ciudades: CiudadEntity;
 }
