@@ -20,6 +20,34 @@ export abstract class BaseController<T extends BaseEntity> {  // Definir que T e
         return this.service.find(); // sin paginación
     }
     @Permissions(['buscar'])
+    @Get(':id')
+    findOne(@Param('id') id: number) {
+        return this.service.findOne({ where: { id } as FindOptionsWhere<T> });
+    }
+    @Permissions(['actualizar'])
+    @Put(':id')
+    update(@Param('id') id: number, @Body() data: T) { 
+        return this.service.replace(id, data); 
+    }
+
+    @Permissions(['actualizar'])
+    @Patch(':id')
+    updatePartial(@Param('id') id: number, @Body() data: QueryDeepPartialEntity<T>) {
+        return this.service.updatePartial(id, data);
+    }
+
+    @Permissions(['eliminar'])
+    @Delete(':id')
+    delete(@Param('id') id: number) {
+        return this.service.delete(id);  
+    }
+    @Permissions(['restaurar'])
+    @Patch(':id/restore')
+    restore(@Param('id') id: number) {
+        return this.service.restore(id); 
+    }
+
+    @Permissions(['buscar'])
     @Get()
     async getPaginated(
         @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number = 1,
@@ -30,31 +58,6 @@ export abstract class BaseController<T extends BaseEntity> {  // Definir que T e
             page,
             limit,
         });
-    }
-    @Permissions(['buscar'])
-    @Get(':id')
-    findOne(@Param('id') id: number) {
-        return this.service.findOne({ where: { id } as FindOptionsWhere<T> });
-    }
-    @Permissions(['actualizar'])
-    @Put(':id')
-    update(@Param('id') id: number, @Body() data: QueryDeepPartialEntity<T>) { 
-        return this.service.update(id, data); 
-    }
-    @Permissions(['actualizar'])
-    @Patch(':id')
-    updatePartial(@Param('id') id: number, @Body() data: QueryDeepPartialEntity<T>) {
-        return this.service.update(id, data);
-    }
-    @Permissions(['eliminar'])
-    @Delete(':id')
-    delete(@Param('id') id: number) {
-        return this.service.delete(id);  
-    }
-    @Permissions(['restaurar'])
-    @Patch(':id/restore')
-    restore(@Param('id') id: number) {
-        return this.service.restore(id); 
     }
 
 

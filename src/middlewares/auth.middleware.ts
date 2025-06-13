@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import {
   CanActivate,
   ExecutionContext,
@@ -19,7 +17,7 @@ export class AuthGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     try {
       const request = context.switchToHttp().getRequest();
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+      
       const token = request.headers.authorization.replace('Bearer ','');
       
       
@@ -29,7 +27,6 @@ export class AuthGuard implements CanActivate {
       if (token == null) {
         throw new UnauthorizedException('El token no existe');
       }
-      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
       const response = await axios.get(`http://localhost:3001/users/can-do/${permissions}_${permissionController}`, {
         headers: {
           'Content-Type': 'application/json',
@@ -41,7 +38,6 @@ export class AuthGuard implements CanActivate {
       }
       return true;
     } catch (error) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       throw new TokenException(error);
     }
   }
