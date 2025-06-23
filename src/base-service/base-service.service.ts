@@ -94,8 +94,15 @@ export abstract class BaseService<T extends BaseEntity> {
     }
     async paginate(options: IPaginationOptions): Promise<Pagination<T>> {
         const queryBuilder = this.repository.createQueryBuilder('entity');
-        queryBuilder.orderBy('entity.id', 'ASC'); // orden por defecto, se puede organizar segun como querramos 
-        //ASC es ascendente y DESC es descendente
+
+        // Aquí agregás los joins para traer relaciones
+        queryBuilder
+            .leftJoinAndSelect('entity.ciudades', 'ciudades')
+            .leftJoinAndSelect('ciudades.provincias', 'provincias')
+            .leftJoinAndSelect('provincias.paises', 'paises');
+
+        queryBuilder.orderBy('entity.id', 'ASC'); // orden por defecto
+
         return paginate<T>(queryBuilder, options);
-    }
+        }
 }

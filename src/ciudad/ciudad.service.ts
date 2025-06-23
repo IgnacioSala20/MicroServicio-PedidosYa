@@ -6,9 +6,11 @@ import { FindManyOptions, FindOneOptions, Repository } from 'typeorm';
 
 @Injectable()
 export class CiudadService extends BaseService<CiudadEntity> {
-    findManyOptions: FindManyOptions<CiudadEntity> = {};
+    findManyOptions: FindManyOptions<CiudadEntity> = {
+        relations: ['provincias', 'provincias.paises'],
+    };
     findOneOptions: FindOneOptions<CiudadEntity> = {
-        relations: ['provincia', 'provincia.pais'],
+        relations: ['provincias', 'provincias.paises'],
     };
     constructor(
         @InjectRepository(CiudadEntity) 

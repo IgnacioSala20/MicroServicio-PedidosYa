@@ -17,7 +17,8 @@ export abstract class BaseController<T extends BaseEntity> {  // Definir que T e
     @Permissions(['buscar'])
     @Get('all')
     getAll() {
-        return this.service.find(); // sin paginación
+        console.log("getAll called");
+        return this.service.find();
     }
     @Permissions(['buscar'])
     @Get(':id')
