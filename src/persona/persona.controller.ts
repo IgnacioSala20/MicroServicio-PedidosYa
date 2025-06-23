@@ -3,7 +3,7 @@ import { PersonaService } from './persona.service';
 import { PersonaEntity } from '@/entities/persona.entity';
 import { BaseController } from '@/base-service/base-controller.controller';
 import { AuthGuard } from '@/middlewares/auth.middleware';
-import { PermissionController, Permissions } from '@/middlewares/decorators/permissions.decorator';
+import { PermissionController } from '@/middlewares/decorators/permissions.decorator';
 
 @UseGuards(AuthGuard)
 @PermissionController('persona')
