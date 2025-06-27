@@ -3,7 +3,9 @@ import {
     FindManyOptions,
     FindOneOptions,
     FindOptionsWhere,
+    ObjectLiteral,
     Repository,
+    SelectQueryBuilder,
     UpdateResult,
 } from 'typeorm';
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
@@ -95,14 +97,36 @@ export abstract class BaseService<T extends BaseEntity> {
     async paginate(options: IPaginationOptions): Promise<Pagination<T>> {
         const queryBuilder = this.repository.createQueryBuilder('entity');
 
-        // Aquí agregás los joins para traer relaciones
-        queryBuilder
-            .leftJoinAndSelect('entity.ciudades', 'ciudades')
-            .leftJoinAndSelect('ciudades.provincias', 'provincias')
-            .leftJoinAndSelect('provincias.paises', 'paises');
+        const relations = (this.findManyOptions.relations ?? []) as string[];
 
-        queryBuilder.orderBy('entity.id', 'ASC'); // orden por defecto
+        applyRelationsJoins(queryBuilder, 'entity', relations);
+
+        queryBuilder.orderBy('entity.id', 'ASC');
 
         return paginate<T>(queryBuilder, options);
+    }
+}
+function applyRelationsJoins<T extends ObjectLiteral>(
+    queryBuilder: SelectQueryBuilder<T>,
+    rootAlias: string,
+    relations: string[],
+    ) {
+    const joinedAliases = new Set<string>();
+
+    relations.forEach((relation) => {
+        const parts = relation.split('.');
+        let parentAlias = rootAlias;
+
+        for (const part of parts) {
+        const relationPath = `${parentAlias}.${part}`;
+        const alias = `${parentAlias}_${part}`;
+
+        if (!joinedAliases.has(alias)) {
+            queryBuilder.leftJoinAndSelect(relationPath, alias);
+            joinedAliases.add(alias);
         }
+
+        parentAlias = alias;
+        }
+    });
 }
