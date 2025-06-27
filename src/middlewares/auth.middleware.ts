@@ -7,7 +7,6 @@ import {
 import { Reflector } from '@nestjs/core';
 import { PermissionController, Permissions } from './decorators/permissions.decorator';
 import axios from 'axios';
-import { TokenException } from './tokenException';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -36,7 +35,15 @@ export class AuthGuard implements CanActivate {
       }
       return true;
     } catch (error) {
-      throw new TokenException(error);
+      if (axios.isAxiosError(error)) {
+        const status = error?.response?.status;
+        const message = error?.response?.data?.message || 'Token inválido';
+
+        if (status === 401) {
+          throw new UnauthorizedException(message);
+        }
+      }
+      throw new Error('Fallo la comunicación con el servicio de autenticación');
     }
   }
 }
